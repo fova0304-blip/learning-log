@@ -217,6 +217,10 @@ chmod +x check.sh 권한 부여 이후:
 
 ### 막힌 거
 1. check.sh 파일을 만들고
+
+printf '#!/bin/sh
+if test -f "$1"; then echo "file exists"; else echo "file does not exist; fi' > check.sh
+
 2. ls -l check.sh 실행함 - 실행권한(x) 없음 
 
 - -rw-r--r--@ 1 admin  staff  86  5월 14 18:29 check.sh
