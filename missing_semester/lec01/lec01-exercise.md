@@ -20,6 +20,10 @@ List the contents of the current working directory in long format
 ### 막힌 거
 man ls 사용후 나가는데 :q 써야함
 
+각 줄의 첫 10글자는 무슨 의미?:
+
+-rwxr-xr-x에서 첫 글자는 파일 종류, 뒤 9글자는 owner/group/others의 rwx 권한.
+
 
 ## Exercise 2: Glob
 In the command find ~/Downloads -type f -name "*.zip" -mtime +30, the *.zip is a “glob”. What is a glob? Create a test directory with some files and experiment with patterns like ls *.txt, ls file?.txt, and ls {a,b,c}.txt. See Pattern Matching in the Bash manual.[https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html]
@@ -117,7 +121,7 @@ stdout / stderr 다른 파일로 보내기:
 ls /nonexistent /tmp > 정상출력.txt 2> 에러출력.txt
 
 같은파일로 보내기:
-ls /nonexistent /temp > 모든출력.txt 2>&1
+ls /nonexistent /tmp > 모든출력.txt 2>&1
 
 2>&1은 stderr를 stdout이 현재 가고있는곳으로 보내라 
 
@@ -155,11 +159,19 @@ ls /tmp/mydir 해봐 실패하면 만들어 /tmp/mydir
 ### 결과
 ls /tmp/mydir || mkdir /tmp/mydir
 
+or
+
+test -d /tmp/mydir || mkdir /tmp/mydir
 ### 막힌 거
 코덱스 피셜:
 /tmp/mydir이 있는지 확인하려면 test, [ ... ], 또는 ls 같은 명령어가 필요해요
 
 어떤_명령어 || mkdir /tmp/mydir
+
+더 정확한 답은 디렉토리 존재 여부까지 파악해야하기때문에
+test -d를 사용하는게 맞음
+
+test -d /tmp/mydir || mkdir /tmp/mydir
 
 ## Exercise 7: File check script
 Write a script that takes a filename as an argument ($1) and checks whether the file exists using test -f or [ -f ... ]. It should print different messages depending on whether the file exists. See Bash Conditional Expressions.
@@ -179,9 +191,12 @@ if test -f $1; then echo "file exists"; else echo "file does not exist";  fi
 output : file exists
 
 ### 결과
+if test -f $1; then echo "file exists"; else echo "file does not exist";  fi
+대신 "$1"을 감싸는게 더 좋음
 
 ### 막힌 거
 takes a filename as an argument $1을 까먹음
+
 
 
 ## Exercise 8: chmod +x
@@ -196,6 +211,8 @@ Exercise 7 스크립트를 `check.sh`로 저장.
 아예 이해를 못했음
 
 ### 결과
+chmod +x check.sh 권한 부여 이후:
+
 -rwxr-xr-x@ 1 admin  staff  86  5월 14 18:29 check.sh
 
 ### 막힌 거
@@ -223,6 +240,21 @@ zsh: command not found: 2026-05-14
 
 echo $(date +%Y-%m-%d) > notes.txt
 만들어짐
+
+대신 문제에서는 txt파일의 이름을 이렇게 만들라고 해서:
+
+cp notes.txt notes_$(date +%Y-%m-%d).txt
+
+cp stands for copy
+
+복사를 하고 이름만 바꿔서 똑같은 파일 만드는거임
+
+## 결과
+cp notes.txt notes_$(date +%Y-%m-%d).txt
+
+notes.txt 복사후 이름을 따로 지어줌
+
+notes_2026-05-14.txt로
 
 ### 막힌 거
 $(date +%Y-%m-%d) 출력하는 명령이 아님 그래서 echo를 추가해줘야함
@@ -273,5 +305,7 @@ head -5
 ### 막힌 거
 extension의 정의를 잘 몰랐음- 파이썬 자바 pdf 등등임
 
-걍 모르겠음
+처음에는 특정 확장자 하나를 찾는 문제로 이해했는데,
+실제로는 모든 파일의 확장자를 세고 top 5를 구하는 문제였음.
+
 
