@@ -28,7 +28,7 @@ class Queue:
     #     return True
     
     def enqueue(self,value):
-        new_node = None(value)
+        new_node = Node(value)
         if self.first is None:
             self.first = new_node
             self.last = new_node
