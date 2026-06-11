@@ -36,7 +36,13 @@ def sort_stack(stack_list):
         #while not sorted_list.is_empty():
         #맨 처음에 sorted_list가 비어있기 때문이기도 하고, 더 중요하게는 peek()를 안전하게 쓰려고 넣는 거
 
-        while not sorted_list.is_empty() and sorted_list.peek() > temp:
+        while not sorted_list.is_empty() and sorted_list.peek() > temp: 
+            ''' 
+            temp보다 큰 애들 전부 stack_list로 빼기
+                → temp를 sorted_list에 넣기
+                → 다시 stack_list에서 하나 꺼내기
+                → 반복
+            '''
 
             stack_list.push(sorted_list.pop())
         
